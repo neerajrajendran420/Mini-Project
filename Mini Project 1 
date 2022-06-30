@@ -1,0 +1,2232 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "MAZFfq-RxSMD"
+      },
+      "source": [
+        "*** Code to check if the Team database connections are working ***\n",
+        "Create a copy of this file and fill in the username/password. You need the password that you created in class and gave us "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 169,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Q867yGapfM0h",
+        "outputId": "ae86e0b2-4bc9-4e6a-9bac-2c95f0deb5de"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: mysqlclient in /usr/local/lib/python3.7/dist-packages (2.1.0)\n"
+          ]
+        }
+      ],
+      "source": [
+        "!pip install mysqlclient"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 170,
+      "metadata": {
+        "id": "6267X1csfO6v",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "f1b901a4-2a75-4ce3-bbd7-887fad1bd9ab"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "The sql extension is already loaded. To reload it, use:\n",
+            "  %reload_ext sql\n"
+          ]
+        }
+      ],
+      "source": [
+        "%load_ext sql"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 171,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 35
+        },
+        "id": "EbNIGNpkfSah",
+        "outputId": "3b46c365-eaa8-4872-feee-9dee7eb73c2f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'Connected: team18@None'"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "string"
+            }
+          },
+          "metadata": {},
+          "execution_count": 171
+        }
+      ],
+      "source": [
+        "# Enter team name (team#) and password below to check connection\n",
+        "%sql mysql://team18:Password69@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 172,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 119
+        },
+        "id": "3QHP37M1fV89",
+        "outputId": "e744d7a4-dc48-4baf-b893-b2f2d47a46e0"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "2 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('information_schema',), ('team18',)]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Database</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>information_schema</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>team18</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 172
+        }
+      ],
+      "source": [
+        "%sql show databases"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 173,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bBdAuwvXfZB1",
+        "outputId": "34b191fb-e57b-4fb1-8665-7bc2bfc2278e"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[]"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 173
+        }
+      ],
+      "source": [
+        "# your team name is the same as your schema/database name\n",
+        "%sql use team18  "
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 176,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 222
+        },
+        "id": "tXn_UUweDxTb",
+        "outputId": "c6357ea7-d83b-4a67-f002-7404824bba3a"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n",
+            "6 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('Business',), ('Check-in',), ('Checkin2',), ('Review',), ('Tip',), ('User',)]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Tables_in_team18</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Business</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Check-in</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Checkin2</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Review</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Tip</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>User</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 176
+        }
+      ],
+      "source": [
+        "%%sql \n",
+        "use team18;\n",
+        "SHOW tables"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Cv3C2OilmRyn"
+      },
+      "source": [
+        "# **Understanding the type of data different tables hold in YELP Database**"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 177,
+      "metadata": {
+        "id": "MjZZPb25_N6N",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 414
+        },
+        "outputId": "3079447d-39cf-4703-a93c-76a2275d8dc1"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n",
+            "15 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('index', 'bigint(20)', 'YES', 'MUL', None, ''),\n",
+              " ('business_id', 'text', 'YES', '', None, ''),\n",
+              " ('name', 'text', 'YES', '', None, ''),\n",
+              " ('address', 'text', 'YES', '', None, ''),\n",
+              " ('city', 'text', 'YES', '', None, ''),\n",
+              " ('state', 'text', 'YES', '', None, ''),\n",
+              " ('postal_code', 'text', 'YES', '', None, ''),\n",
+              " ('latitude', 'double', 'YES', '', None, ''),\n",
+              " ('longitude', 'double', 'YES', '', None, ''),\n",
+              " ('stars', 'double', 'YES', '', None, ''),\n",
+              " ('review_count', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('is_open', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('attributes', 'json', 'YES', '', None, ''),\n",
+              " ('categories', 'text', 'YES', '', None, ''),\n",
+              " ('hours', 'json', 'YES', '', None, '')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Field</th>\n",
+              "            <th>Type</th>\n",
+              "            <th>Null</th>\n",
+              "            <th>Key</th>\n",
+              "            <th>Default</th>\n",
+              "            <th>Extra</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>index</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td>MUL</td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>business_id</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>name</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>address</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>city</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>state</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>postal_code</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>latitude</td>\n",
+              "            <td>double</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>longitude</td>\n",
+              "            <td>double</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>stars</td>\n",
+              "            <td>double</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>review_count</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>is_open</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>attributes</td>\n",
+              "            <td>json</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>categories</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>hours</td>\n",
+              "            <td>json</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 177
+        }
+      ],
+      "source": [
+        "%%sql \n",
+        "use team18;\n",
+        "DESCRIBE Business"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "l4cWeMz4aTKC",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 585
+        },
+        "outputId": "bbd86712-83b8-422d-b767-10861034000c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n",
+            "23 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('index', 'bigint(20)', 'YES', 'MUL', None, ''),\n",
+              " ('user_id', 'text', 'YES', '', None, ''),\n",
+              " ('name', 'text', 'YES', '', None, ''),\n",
+              " ('review_count', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('yelping_since', 'text', 'YES', '', None, ''),\n",
+              " ('useful', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('funny', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('cool', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('elite', 'text', 'YES', '', None, ''),\n",
+              " ('friends', 'text', 'YES', '', None, ''),\n",
+              " ('fans', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('average_stars', 'double', 'YES', '', None, ''),\n",
+              " ('compliment_hot', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_more', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_profile', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_cute', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_list', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_note', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_plain', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_cool', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_funny', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_writer', 'bigint(20)', 'YES', '', None, ''),\n",
+              " ('compliment_photos', 'bigint(20)', 'YES', '', None, '')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Field</th>\n",
+              "            <th>Type</th>\n",
+              "            <th>Null</th>\n",
+              "            <th>Key</th>\n",
+              "            <th>Default</th>\n",
+              "            <th>Extra</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>index</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td>MUL</td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>user_id</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>name</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>review_count</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>yelping_since</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>useful</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>funny</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>cool</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>elite</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>friends</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>fans</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>average_stars</td>\n",
+              "            <td>double</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_hot</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_more</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_profile</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_cute</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_list</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_note</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_plain</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_cool</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_funny</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_writer</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_photos</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 168
+        }
+      ],
+      "source": [
+        "%%sql \n",
+        "use team18;\n",
+        "DESCRIBE User"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "h_NlfF34iIyf",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 222
+        },
+        "outputId": "52d7a575-1d59-40b9-e33b-2c37df65ad4f"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n",
+            "6 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('index', 'bigint(20)', 'YES', 'MUL', None, ''),\n",
+              " ('user_id', 'text', 'YES', '', None, ''),\n",
+              " ('business_id', 'text', 'YES', '', None, ''),\n",
+              " ('text', 'text', 'YES', '', None, ''),\n",
+              " ('date', 'datetime', 'YES', '', None, ''),\n",
+              " ('compliment_count', 'bigint(20)', 'YES', '', None, '')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Field</th>\n",
+              "            <th>Type</th>\n",
+              "            <th>Null</th>\n",
+              "            <th>Key</th>\n",
+              "            <th>Default</th>\n",
+              "            <th>Extra</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>index</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td>MUL</td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>user_id</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>business_id</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>text</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>date</td>\n",
+              "            <td>datetime</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>compliment_count</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 154
+        }
+      ],
+      "source": [
+        "%%sql \n",
+        "use team18;\n",
+        "DESCRIBE Tip"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "JKJ7_DG_iXQx",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 158
+        },
+        "outputId": "a5a8e612-48b2-46a0-cc18-feaa502ec3ba"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "0 rows affected.\n",
+            "3 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('index', 'bigint(20)', 'YES', 'MUL', None, ''),\n",
+              " ('business_id', 'text', 'YES', '', None, ''),\n",
+              " ('date', 'text', 'YES', '', None, '')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>Field</th>\n",
+              "            <th>Type</th>\n",
+              "            <th>Null</th>\n",
+              "            <th>Key</th>\n",
+              "            <th>Default</th>\n",
+              "            <th>Extra</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>index</td>\n",
+              "            <td>bigint(20)</td>\n",
+              "            <td>YES</td>\n",
+              "            <td>MUL</td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>business_id</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>date</td>\n",
+              "            <td>text</td>\n",
+              "            <td>YES</td>\n",
+              "            <td></td>\n",
+              "            <td>None</td>\n",
+              "            <td></td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 155
+        }
+      ],
+      "source": [
+        "%%sql \n",
+        "use team18;\n",
+        "DESCRIBE Checkin"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "CpsIrLnBnlZ3"
+      },
+      "source": [
+        "### **We want to open a restaurant in United States with the help of yelp data.**\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **1. We filtered the top 10 states in US by number of acfes and seeing the number of reviews posted in that state for cafes to select one of the states where we want to open a cafe**"
+      ],
+      "metadata": {
+        "id": "f5utozBhui-w"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT state, COUNT(name) AS \"Number of Cafes\", SUM(review_count) AS \"Number of Reviews\"\n",
+        "FROM Business\n",
+        "WHERE categories LIKE \"%Cafes%\" AND is_open = 1\n",
+        "GROUP BY state\n",
+        "ORDER BY COUNT(name) DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 289
+        },
+        "id": "qaTU1fT2szwt",
+        "outputId": "26e82619-29b7-4f75-ab51-b5253b1f80d5"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('PA', 417, Decimal('46658')),\n",
+              " ('FL', 365, Decimal('41328')),\n",
+              " ('LA', 169, Decimal('44669')),\n",
+              " ('TN', 137, Decimal('17746')),\n",
+              " ('MO', 120, Decimal('14514')),\n",
+              " ('AB', 115, Decimal('4521')),\n",
+              " ('IN', 106, Decimal('14833')),\n",
+              " ('AZ', 86, Decimal('11651')),\n",
+              " ('NJ', 72, Decimal('3929')),\n",
+              " ('CA', 53, Decimal('10955'))]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>state</th>\n",
+              "            <th>Number of Cafes</th>\n",
+              "            <th>Number of Reviews</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>PA</td>\n",
+              "            <td>417</td>\n",
+              "            <td>46658</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>FL</td>\n",
+              "            <td>365</td>\n",
+              "            <td>41328</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>LA</td>\n",
+              "            <td>169</td>\n",
+              "            <td>44669</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>TN</td>\n",
+              "            <td>137</td>\n",
+              "            <td>17746</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>MO</td>\n",
+              "            <td>120</td>\n",
+              "            <td>14514</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>AB</td>\n",
+              "            <td>115</td>\n",
+              "            <td>4521</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>IN</td>\n",
+              "            <td>106</td>\n",
+              "            <td>14833</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>AZ</td>\n",
+              "            <td>86</td>\n",
+              "            <td>11651</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>NJ</td>\n",
+              "            <td>72</td>\n",
+              "            <td>3929</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>CA</td>\n",
+              "            <td>53</td>\n",
+              "            <td>10955</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 156
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **2. We want to find the city which feels to be more appealing based on number of cafes and the review count in United States**"
+      ],
+      "metadata": {
+        "id": "whNivYnJhNQe"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "REy_p-RnDRj_",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 284
+        },
+        "outputId": "d6de66bc-9475-4295-d003-9eadcfdc6505"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('New Orleans', 110, Decimal('41762'), 'LA'),\n",
+              " ('Metairie', 22, Decimal('1114'), 'LA'),\n",
+              " ('Marrero', 7, Decimal('289'), 'LA'),\n",
+              " ('Kenner', 6, Decimal('378'), 'LA'),\n",
+              " ('Harvey', 5, Decimal('237'), 'LA'),\n",
+              " ('Gretna', 5, Decimal('222'), 'LA'),\n",
+              " ('Chalmette', 3, Decimal('108'), 'LA'),\n",
+              " ('Harahan', 2, Decimal('178'), 'LA'),\n",
+              " ('Arabi', 2, Decimal('131'), 'LA'),\n",
+              " ('Westwego', 2, Decimal('63'), 'LA')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>city</th>\n",
+              "            <th>Number of Cafes</th>\n",
+              "            <th>Number of Reviews</th>\n",
+              "            <th>state</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>New Orleans</td>\n",
+              "            <td>110</td>\n",
+              "            <td>41762</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Metairie</td>\n",
+              "            <td>22</td>\n",
+              "            <td>1114</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Marrero</td>\n",
+              "            <td>7</td>\n",
+              "            <td>289</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Kenner</td>\n",
+              "            <td>6</td>\n",
+              "            <td>378</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Harvey</td>\n",
+              "            <td>5</td>\n",
+              "            <td>237</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Gretna</td>\n",
+              "            <td>5</td>\n",
+              "            <td>222</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Chalmette</td>\n",
+              "            <td>3</td>\n",
+              "            <td>108</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Harahan</td>\n",
+              "            <td>2</td>\n",
+              "            <td>178</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Arabi</td>\n",
+              "            <td>2</td>\n",
+              "            <td>131</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Westwego</td>\n",
+              "            <td>2</td>\n",
+              "            <td>63</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 40
+        }
+      ],
+      "source": [
+        "%%sql\n",
+        "SELECT city, COUNT(name) AS \"Number of Cafes\", SUM(review_count) AS \"Number of Reviews\", state\n",
+        "FROM Business\n",
+        "WHERE categories LIKE \"%Cafes%\" AND is_open = 1 AND state = \"LA\"\n",
+        "GROUP BY city \n",
+        "ORDER BY COUNT(name) DESC, review_count DESC \n",
+        "LIMIT 10;"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **3. We want to find the number of cafes along with their rating and review count in different areas while looking at the postal code of New Orleans**"
+      ],
+      "metadata": {
+        "id": "042BjGDsuBHT"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "otsf0sKrOtPR",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 431
+        },
+        "outputId": "335bc03c-e05b-446b-9948-a8679d4a7c0c"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "17 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('70130', 26, 4.02, Decimal('23561')),\n",
+              " ('70115', 15, 4.2, Decimal('2411')),\n",
+              " ('70119', 12, 4.25, Decimal('2739')),\n",
+              " ('70116', 11, 3.86, Decimal('3941')),\n",
+              " ('70118', 10, 4.0, Decimal('1458')),\n",
+              " ('70112', 7, 3.93, Decimal('2635')),\n",
+              " ('70117', 6, 4.25, Decimal('1181')),\n",
+              " ('70124', 6, 3.83, Decimal('592')),\n",
+              " ('70113', 5, 4.6, Decimal('2548')),\n",
+              " ('70125', 3, 4.0, Decimal('182')),\n",
+              " ('70122', 2, 4.0, Decimal('73')),\n",
+              " ('70123', 2, 3.75, Decimal('91')),\n",
+              " ('70131', 1, 2.0, Decimal('125')),\n",
+              " ('70170', 1, 3.0, Decimal('33')),\n",
+              " ('70114', 1, 4.5, Decimal('65')),\n",
+              " ('70126', 1, 4.0, Decimal('111')),\n",
+              " ('70128', 1, 2.0, Decimal('16'))]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>postal_code</th>\n",
+              "            <th>Number of Cafes</th>\n",
+              "            <th>Average Rating</th>\n",
+              "            <th>Review Count</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>70130</td>\n",
+              "            <td>26</td>\n",
+              "            <td>4.02</td>\n",
+              "            <td>23561</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70115</td>\n",
+              "            <td>15</td>\n",
+              "            <td>4.2</td>\n",
+              "            <td>2411</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70119</td>\n",
+              "            <td>12</td>\n",
+              "            <td>4.25</td>\n",
+              "            <td>2739</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70116</td>\n",
+              "            <td>11</td>\n",
+              "            <td>3.86</td>\n",
+              "            <td>3941</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70118</td>\n",
+              "            <td>10</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>1458</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70112</td>\n",
+              "            <td>7</td>\n",
+              "            <td>3.93</td>\n",
+              "            <td>2635</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70117</td>\n",
+              "            <td>6</td>\n",
+              "            <td>4.25</td>\n",
+              "            <td>1181</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70124</td>\n",
+              "            <td>6</td>\n",
+              "            <td>3.83</td>\n",
+              "            <td>592</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70113</td>\n",
+              "            <td>5</td>\n",
+              "            <td>4.6</td>\n",
+              "            <td>2548</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70125</td>\n",
+              "            <td>3</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>182</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70122</td>\n",
+              "            <td>2</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>73</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70123</td>\n",
+              "            <td>2</td>\n",
+              "            <td>3.75</td>\n",
+              "            <td>91</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70131</td>\n",
+              "            <td>1</td>\n",
+              "            <td>2.0</td>\n",
+              "            <td>125</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70170</td>\n",
+              "            <td>1</td>\n",
+              "            <td>3.0</td>\n",
+              "            <td>33</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70114</td>\n",
+              "            <td>1</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>65</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70126</td>\n",
+              "            <td>1</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>111</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>70128</td>\n",
+              "            <td>1</td>\n",
+              "            <td>2.0</td>\n",
+              "            <td>16</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 12
+        }
+      ],
+      "source": [
+        "%%sql\n",
+        "SELECT postal_code, COUNT(name) AS \"Number of Cafes\", ROUND(AVG(stars),2) AS \"Average Rating\", SUM(review_count) AS \"Review Count\"\n",
+        "FROM Business\n",
+        "WHERE city=\"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1\n",
+        "GROUP BY postal_code\n",
+        "ORDER BY COUNT(name)  DESC ;"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **4. We wanted to find our top 10 competitors in the postal code 70130 where we want to start the cafe**"
+      ],
+      "metadata": {
+        "id": "mmJHm2oxtuov"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT name, stars, postal_code, categories, SUM(review_count) AS \"Review Count\"\n",
+        "FROM Business\n",
+        "WHERE city=\"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1 AND postal_code = '70130'\n",
+        "GROUP BY name\n",
+        "ORDER BY stars DESC, SUM(review_count) DESC\n",
+        "LIMIT 10;\n"
+      ],
+      "metadata": {
+        "id": "mo3T7wjio4ef",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "outputId": "93a4d398-442d-4477-b4f1-d83d61dbbdbc"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('Ruby Slipper - New Orleans', 4.5, '70130', 'Restaurants, American (Traditional), American (New), Cafes, Breakfast & Brunch', Decimal('5193'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'no\\'\", \"HasTV\": \"True\", \"Caters\": \"False\", \"Alcohol\": \"u\\'full_bar\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\':  ... (692 characters truncated) ... \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"True\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Surrey's Café & Juice Bar\", 4.5, '70130', 'Vegetarian, Restaurants, Breakfast & Brunch, Cafes, Juice Bars & Smoothies, Sandwiches, Food', Decimal('2084'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"\\'none\\'\", \"Corkage\": \"False\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': F ... (694 characters truncated) ... \"None\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Lilly's Cafe\", 4.5, '70130', 'Cafes, American (Traditional), Vietnamese, Restaurants', Decimal('777'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"u\\'none\\'\", \"Ambience\": \"{\\'romantic\\': False, \\'intimate\\': False, \\'touristy\\' ... (644 characters truncated) ...  \"None\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Fat Boy Pantry', 4.5, '70130', 'Restaurants, Sandwiches, American (New), Breakfast & Brunch, Coffee & Tea, Food, Cafes, Ice Cream & Frozen Yogurt, Juice Bars & Smoothies, Specialty Food', Decimal('237'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'free\\'\", \"HasTV\": \"True\", \"Caters\": \"True\", \"Alcohol\": \"\\'none\\'\", \"Corkage\": \"False\", \"Ambience\": \"{\\'touristy\\': Fals ... (770 characters truncated) ... 2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Breads on Oak Cafe & Bakery', 4.5, '70130', 'Food, Restaurants, Cafes, Vegan, Bakeries, Breakfast & Brunch', Decimal('61'), '{\"WiFi\": \"u\\'free\\'\", \"HasTV\": \"False\", \"Caters\": \"True\", \"Alcohol\": \"u\\'beer_and_wine\\'\", \"HappyHour\": \"False\", \"BikeParking\": \"True\", \"DogsAllowed\" ... (270 characters truncated) ... \"False\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('French Truck Coffee', 4.5, '70130', 'Coffee & Tea, Restaurants, Food, Cafes', Decimal('46'), '{\"WiFi\": \"u\\'free\\'\", \"Caters\": \"False\", \"NoiseLevel\": \"u\\'average\\'\", \"BikeParking\": \"True\", \"DogsAllowed\": \"False\", \"OutdoorSeating\": \"True\", \"Busi ... (158 characters truncated) ... ry\": \"False\", \"WheelchairAccessible\": \"True\", \"BusinessAcceptsBitcoin\": \"False\", \"RestaurantsPriceRange2\": \"1\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Café Cour', 4.5, '70130', 'Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee & Tea, Southern', Decimal('10'), '{\"WiFi\": \"u\\'free\\'\", \"Caters\": \"True\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': False, \\'romantic\\': False, \\'divey\\': False, \\'intimate\\': F ... (236 characters truncated) ... et\\': False}\", \"RestaurantsTakeOut\": \"True\", \"RestaurantsDelivery\": \"True\", \"RestaurantsReservations\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Cafe Beignet on Royal Street', 4.0, '70130', 'Cafes, Breakfast & Brunch, Food, Restaurants, Coffee & Tea, Local Flavor, Sandwiches, Donuts', Decimal('2688'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"u\\'beer_and_wine\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipst ... (704 characters truncated) ... 1\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Jimmy J's Cafe\", 4.0, '70130', 'American (Traditional), Cafes, American (New), Restaurants, Sandwiches, Breakfast & Brunch', Decimal('2137'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"True\", \"Caters\": \"True\", \"Alcohol\": \"u\\'full_bar\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': False, \\'romantic\\ ... (613 characters truncated) ... \"True\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Mr. B's Bistro\", 4.0, '70130', 'Bars, Breakfast & Brunch, Restaurants, Barbeque, Cajun/Creole, Cafes, Cocktail Bars, Nightlife', Decimal('2064'), '{\"WiFi\": \"u\\'free\\'\", \"HasTV\": \"True\", \"Music\": \"{\\'dj\\': None, \\'background_music\\': False, \\'no_music\\': False, \\'jukebox\\': None, \\'live\\': False, ... (903 characters truncated) ...  \"3\", \"RestaurantsReservations\": \"True\", \"RestaurantsTableService\": \"True\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>stars</th>\n",
+              "            <th>postal_code</th>\n",
+              "            <th>categories</th>\n",
+              "            <th>Review Count</th>\n",
+              "            <th>attributes</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Restaurants, American (Traditional), American (New), Cafes, Breakfast &amp; Brunch</td>\n",
+              "            <td>5193</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;full_bar&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;True&quot;, &quot;NoiseLevel&quot;: &quot;&#x27;loud&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;True&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Vegetarian, Restaurants, Breakfast &amp; Brunch, Cafes, Juice Bars &amp; Smoothies, Sandwiches, Food</td>\n",
+              "            <td>2084</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;&#x27;none&#x27;&quot;, &quot;Corkage&quot;: &quot;False&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BYOBCorkage&quot;: &quot;&#x27;yes_free&#x27;&quot;, &quot;BikeParking&quot;: &quot;False&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: False, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Cafes, American (Traditional), Vietnamese, Restaurants</td>\n",
+              "            <td>777</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;none&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;romantic&#x27;: False, &#x27;intimate&#x27;: False, &#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;divey&#x27;: False, &#x27;classy&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: True, &#x27;dinner&#x27;: True, &#x27;brunch&#x27;: False, &#x27;breakfast&#x27;: False}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;None&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Restaurants, Sandwiches, American (New), Breakfast &amp; Brunch, Coffee &amp; Tea, Food, Cafes, Ice Cream &amp; Frozen Yogurt, Juice Bars &amp; Smoothies, Specialty Food</td>\n",
+              "            <td>237</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;&#x27;none&#x27;&quot;, &quot;Corkage&quot;: &quot;False&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: True, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: False, &#x27;casual&#x27;: True}&quot;, &quot;DriveThru&quot;: &quot;False&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;quiet&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: False, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Breads on Oak Cafe &amp; Bakery</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Food, Restaurants, Cafes, Vegan, Bakeries, Breakfast &amp; Brunch</td>\n",
+              "            <td>61</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;u&#x27;beer_and_wine&#x27;&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: None, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>French Truck Coffee</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Coffee &amp; Tea, Restaurants, Food, Cafes</td>\n",
+              "            <td>46</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: True, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;False&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;1&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Café Cour</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee &amp; Tea, Southern</td>\n",
+              "            <td>10</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: False, &#x27;casual&#x27;: False}&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: False, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Cafe Beignet on Royal Street</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Cafes, Breakfast &amp; Brunch, Food, Restaurants, Coffee &amp; Tea, Local Flavor, Sandwiches, Donuts</td>\n",
+              "            <td>2688</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;beer_and_wine&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;None&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;1&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Jimmy J&#x27;s Cafe</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>American (Traditional), Cafes, American (New), Restaurants, Sandwiches, Breakfast &amp; Brunch</td>\n",
+              "            <td>2137</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;u&#x27;full_bar&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: True, &#x27;dinner&#x27;: None, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Mr. B&#x27;s Bistro</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Bars, Breakfast &amp; Brunch, Restaurants, Barbeque, Cajun/Creole, Cafes, Cocktail Bars, Nightlife</td>\n",
+              "            <td>2064</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Music&quot;: &quot;{&#x27;dj&#x27;: None, &#x27;background_music&#x27;: False, &#x27;no_music&#x27;: False, &#x27;jukebox&#x27;: None, &#x27;live&#x27;: False, &#x27;video&#x27;: False, &#x27;karaoke&#x27;: None}&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;&#x27;full_bar&#x27;&quot;, &quot;Smoking&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;romantic&#x27;: False, &#x27;intimate&#x27;: False, &#x27;classy&#x27;: True, &#x27;hipster&#x27;: False, &#x27;divey&#x27;: False, &#x27;touristy&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;casual&#x27;: False}&quot;, &quot;CoatCheck&quot;: &quot;False&quot;, &quot;DriveThru&quot;: &quot;False&quot;, &quot;HappyHour&quot;: &quot;True&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;False&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;False&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: True, &#x27;brunch&#x27;: None, &#x27;breakfast&#x27;: False}&quot;, &quot;OutdoorSeating&quot;: &quot;False&quot;, &quot;BusinessParking&quot;: &quot;{u&#x27;valet&#x27;: True, u&#x27;garage&#x27;: True, u&#x27;street&#x27;: False, u&#x27;lot&#x27;: False, u&#x27;validated&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;3&quot;, &quot;RestaurantsReservations&quot;: &quot;True&quot;, &quot;RestaurantsTableService&quot;: &quot;True&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 77
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **5. We wanted to find out the number of competitors found in above steps who provide take out services ** **bold text**"
+      ],
+      "metadata": {
+        "id": "2ZuyvnEHRNT0"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT name, stars, postal_code, categories, SUM(review_count) AS \"Review Count\", attributes\n",
+        "FROM Business\n",
+        "WHERE city=\"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1 AND postal_code = '70130' AND attributes LIKE \"RestaurantsTakeOut\"=\"True\"\n",
+        "GROUP BY name\n",
+        "ORDER BY stars DESC, SUM(review_count) DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1000
+        },
+        "id": "Wp3JiA2wK8zY",
+        "outputId": "a9782da5-a955-479b-c008-786320a6ce18"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('Ruby Slipper - New Orleans', 4.5, '70130', 'Restaurants, American (Traditional), American (New), Cafes, Breakfast & Brunch', Decimal('5193'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'no\\'\", \"HasTV\": \"True\", \"Caters\": \"False\", \"Alcohol\": \"u\\'full_bar\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\':  ... (692 characters truncated) ... \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"True\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Surrey's Café & Juice Bar\", 4.5, '70130', 'Vegetarian, Restaurants, Breakfast & Brunch, Cafes, Juice Bars & Smoothies, Sandwiches, Food', Decimal('2084'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"\\'none\\'\", \"Corkage\": \"False\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': F ... (694 characters truncated) ... \"None\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Lilly's Cafe\", 4.5, '70130', 'Cafes, American (Traditional), Vietnamese, Restaurants', Decimal('777'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"u\\'none\\'\", \"Ambience\": \"{\\'romantic\\': False, \\'intimate\\': False, \\'touristy\\' ... (644 characters truncated) ...  \"None\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Fat Boy Pantry', 4.5, '70130', 'Restaurants, Sandwiches, American (New), Breakfast & Brunch, Coffee & Tea, Food, Cafes, Ice Cream & Frozen Yogurt, Juice Bars & Smoothies, Specialty Food', Decimal('237'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'free\\'\", \"HasTV\": \"True\", \"Caters\": \"True\", \"Alcohol\": \"\\'none\\'\", \"Corkage\": \"False\", \"Ambience\": \"{\\'touristy\\': Fals ... (770 characters truncated) ... 2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Breads on Oak Cafe & Bakery', 4.5, '70130', 'Food, Restaurants, Cafes, Vegan, Bakeries, Breakfast & Brunch', Decimal('61'), '{\"WiFi\": \"u\\'free\\'\", \"HasTV\": \"False\", \"Caters\": \"True\", \"Alcohol\": \"u\\'beer_and_wine\\'\", \"HappyHour\": \"False\", \"BikeParking\": \"True\", \"DogsAllowed\" ... (270 characters truncated) ... \"False\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('French Truck Coffee', 4.5, '70130', 'Coffee & Tea, Restaurants, Food, Cafes', Decimal('46'), '{\"WiFi\": \"u\\'free\\'\", \"Caters\": \"False\", \"NoiseLevel\": \"u\\'average\\'\", \"BikeParking\": \"True\", \"DogsAllowed\": \"False\", \"OutdoorSeating\": \"True\", \"Busi ... (158 characters truncated) ... ry\": \"False\", \"WheelchairAccessible\": \"True\", \"BusinessAcceptsBitcoin\": \"False\", \"RestaurantsPriceRange2\": \"1\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Café Cour', 4.5, '70130', 'Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee & Tea, Southern', Decimal('10'), '{\"WiFi\": \"u\\'free\\'\", \"Caters\": \"True\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': False, \\'romantic\\': False, \\'divey\\': False, \\'intimate\\': F ... (236 characters truncated) ... et\\': False}\", \"RestaurantsTakeOut\": \"True\", \"RestaurantsDelivery\": \"True\", \"RestaurantsReservations\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " ('Cafe Beignet on Royal Street', 4.0, '70130', 'Cafes, Breakfast & Brunch, Food, Restaurants, Coffee & Tea, Local Flavor, Sandwiches, Donuts', Decimal('2688'), '{\"BYOB\": \"False\", \"WiFi\": \"u\\'no\\'\", \"HasTV\": \"False\", \"Caters\": \"False\", \"Alcohol\": \"u\\'beer_and_wine\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipst ... (704 characters truncated) ... 1\", \"RestaurantsReservations\": \"False\", \"RestaurantsTableService\": \"False\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Jimmy J's Cafe\", 4.0, '70130', 'American (Traditional), Cafes, American (New), Restaurants, Sandwiches, Breakfast & Brunch', Decimal('2137'), '{\"WiFi\": \"u\\'no\\'\", \"HasTV\": \"True\", \"Caters\": \"True\", \"Alcohol\": \"u\\'full_bar\\'\", \"Ambience\": \"{\\'touristy\\': False, \\'hipster\\': False, \\'romantic\\ ... (613 characters truncated) ... \"True\", \"RestaurantsPriceRange2\": \"2\", \"RestaurantsReservations\": \"False\", \"RestaurantsGoodForGroups\": \"False\", \"BusinessAcceptsCreditCards\": \"True\"}'),\n",
+              " (\"Mr. B's Bistro\", 4.0, '70130', 'Bars, Breakfast & Brunch, Restaurants, Barbeque, Cajun/Creole, Cafes, Cocktail Bars, Nightlife', Decimal('2064'), '{\"WiFi\": \"u\\'free\\'\", \"HasTV\": \"True\", \"Music\": \"{\\'dj\\': None, \\'background_music\\': False, \\'no_music\\': False, \\'jukebox\\': None, \\'live\\': False, ... (903 characters truncated) ...  \"3\", \"RestaurantsReservations\": \"True\", \"RestaurantsTableService\": \"True\", \"RestaurantsGoodForGroups\": \"True\", \"BusinessAcceptsCreditCards\": \"True\"}')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>stars</th>\n",
+              "            <th>postal_code</th>\n",
+              "            <th>categories</th>\n",
+              "            <th>Review Count</th>\n",
+              "            <th>attributes</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Restaurants, American (Traditional), American (New), Cafes, Breakfast &amp; Brunch</td>\n",
+              "            <td>5193</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;full_bar&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;True&quot;, &quot;NoiseLevel&quot;: &quot;&#x27;loud&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;True&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Vegetarian, Restaurants, Breakfast &amp; Brunch, Cafes, Juice Bars &amp; Smoothies, Sandwiches, Food</td>\n",
+              "            <td>2084</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;&#x27;none&#x27;&quot;, &quot;Corkage&quot;: &quot;False&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BYOBCorkage&quot;: &quot;&#x27;yes_free&#x27;&quot;, &quot;BikeParking&quot;: &quot;False&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: False, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Cafes, American (Traditional), Vietnamese, Restaurants</td>\n",
+              "            <td>777</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;none&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;romantic&#x27;: False, &#x27;intimate&#x27;: False, &#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;divey&#x27;: False, &#x27;classy&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: True, &#x27;dinner&#x27;: True, &#x27;brunch&#x27;: False, &#x27;breakfast&#x27;: False}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;ByAppointmentOnly&quot;: &quot;False&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;None&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Restaurants, Sandwiches, American (New), Breakfast &amp; Brunch, Coffee &amp; Tea, Food, Cafes, Ice Cream &amp; Frozen Yogurt, Juice Bars &amp; Smoothies, Specialty Food</td>\n",
+              "            <td>237</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;&#x27;none&#x27;&quot;, &quot;Corkage&quot;: &quot;False&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: True, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: False, &#x27;casual&#x27;: True}&quot;, &quot;DriveThru&quot;: &quot;False&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;quiet&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: False, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: False, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Breads on Oak Cafe &amp; Bakery</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Food, Restaurants, Cafes, Vegan, Bakeries, Breakfast &amp; Brunch</td>\n",
+              "            <td>61</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;u&#x27;beer_and_wine&#x27;&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: None, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>French Truck Coffee</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Coffee &amp; Tea, Restaurants, Food, Cafes</td>\n",
+              "            <td>46</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: True, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;False&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;BusinessAcceptsBitcoin&quot;: &quot;False&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;1&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Café Cour</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee &amp; Tea, Southern</td>\n",
+              "            <td>10</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: False, &#x27;casual&#x27;: False}&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: False, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Cafe Beignet on Royal Street</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Cafes, Breakfast &amp; Brunch, Food, Restaurants, Coffee &amp; Tea, Local Flavor, Sandwiches, Donuts</td>\n",
+              "            <td>2688</td>\n",
+              "            <td>{&quot;BYOB&quot;: &quot;False&quot;, &quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;False&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;u&#x27;beer_and_wine&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;True&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: False, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;True&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;None&quot;, &quot;RestaurantsDelivery&quot;: &quot;None&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;1&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsTableService&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Jimmy J&#x27;s Cafe</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>American (Traditional), Cafes, American (New), Restaurants, Sandwiches, Breakfast &amp; Brunch</td>\n",
+              "            <td>2137</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Caters&quot;: &quot;True&quot;, &quot;Alcohol&quot;: &quot;u&#x27;full_bar&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;touristy&#x27;: False, &#x27;hipster&#x27;: False, &#x27;romantic&#x27;: False, &#x27;divey&#x27;: False, &#x27;intimate&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;classy&#x27;: True, &#x27;casual&#x27;: True}&quot;, &quot;HappyHour&quot;: &quot;False&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;True&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;True&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: True, &#x27;dinner&#x27;: None, &#x27;brunch&#x27;: True, &#x27;breakfast&#x27;: True}&quot;, &quot;OutdoorSeating&quot;: &quot;None&quot;, &quot;BusinessParking&quot;: &quot;{&#x27;garage&#x27;: False, &#x27;street&#x27;: True, &#x27;validated&#x27;: False, &#x27;lot&#x27;: False, &#x27;valet&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;u&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;2&quot;, &quot;RestaurantsReservations&quot;: &quot;False&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;False&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Mr. B&#x27;s Bistro</td>\n",
+              "            <td>4.0</td>\n",
+              "            <td>70130</td>\n",
+              "            <td>Bars, Breakfast &amp; Brunch, Restaurants, Barbeque, Cajun/Creole, Cafes, Cocktail Bars, Nightlife</td>\n",
+              "            <td>2064</td>\n",
+              "            <td>{&quot;WiFi&quot;: &quot;u&#x27;free&#x27;&quot;, &quot;HasTV&quot;: &quot;True&quot;, &quot;Music&quot;: &quot;{&#x27;dj&#x27;: None, &#x27;background_music&#x27;: False, &#x27;no_music&#x27;: False, &#x27;jukebox&#x27;: None, &#x27;live&#x27;: False, &#x27;video&#x27;: False, &#x27;karaoke&#x27;: None}&quot;, &quot;Caters&quot;: &quot;False&quot;, &quot;Alcohol&quot;: &quot;&#x27;full_bar&#x27;&quot;, &quot;Smoking&quot;: &quot;u&#x27;no&#x27;&quot;, &quot;Ambience&quot;: &quot;{&#x27;romantic&#x27;: False, &#x27;intimate&#x27;: False, &#x27;classy&#x27;: True, &#x27;hipster&#x27;: False, &#x27;divey&#x27;: False, &#x27;touristy&#x27;: False, &#x27;trendy&#x27;: False, &#x27;upscale&#x27;: False, &#x27;casual&#x27;: False}&quot;, &quot;CoatCheck&quot;: &quot;False&quot;, &quot;DriveThru&quot;: &quot;False&quot;, &quot;HappyHour&quot;: &quot;True&quot;, &quot;NoiseLevel&quot;: &quot;u&#x27;average&#x27;&quot;, &quot;BikeParking&quot;: &quot;False&quot;, &quot;DogsAllowed&quot;: &quot;False&quot;, &quot;GoodForKids&quot;: &quot;False&quot;, &quot;GoodForMeal&quot;: &quot;{&#x27;dessert&#x27;: None, &#x27;latenight&#x27;: False, &#x27;lunch&#x27;: None, &#x27;dinner&#x27;: True, &#x27;brunch&#x27;: None, &#x27;breakfast&#x27;: False}&quot;, &quot;OutdoorSeating&quot;: &quot;False&quot;, &quot;BusinessParking&quot;: &quot;{u&#x27;valet&#x27;: True, u&#x27;garage&#x27;: True, u&#x27;street&#x27;: False, u&#x27;lot&#x27;: False, u&#x27;validated&#x27;: False}&quot;, &quot;RestaurantsAttire&quot;: &quot;&#x27;casual&#x27;&quot;, &quot;RestaurantsTakeOut&quot;: &quot;True&quot;, &quot;RestaurantsDelivery&quot;: &quot;True&quot;, &quot;WheelchairAccessible&quot;: &quot;True&quot;, &quot;RestaurantsPriceRange2&quot;: &quot;3&quot;, &quot;RestaurantsReservations&quot;: &quot;True&quot;, &quot;RestaurantsTableService&quot;: &quot;True&quot;, &quot;RestaurantsGoodForGroups&quot;: &quot;True&quot;, &quot;BusinessAcceptsCreditCards&quot;: &quot;True&quot;}</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 83
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **6. We wanted to open 24 hours cafe and for same we wanted to look at operating hours of the top 10 restaurants we have encountered in Query 3**"
+      ],
+      "metadata": {
+        "id": "f7SQdTQRNAcs"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT name, hours as \"Operating Hours\", SUM(review_count) AS \"Review Count\"\n",
+        "FROM Business\n",
+        "WHERE city=\"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1 AND postal_code = '70130'\n",
+        "GROUP BY name\n",
+        "ORDER BY stars DESC, SUM(review_count) DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "id": "HjBfaMuy3Uw9",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 403
+        },
+        "outputId": "864b167f-eb53-40de-a434-1d9f627a014c"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('Ruby Slipper - New Orleans', '{\"Friday\": \"7:30-14:0\", \"Monday\": \"0:0-0:0\", \"Sunday\": \"7:30-15:0\", \"Tuesday\": \"7:30-14:0\", \"Saturday\": \"7:30-15:0\", \"Thursday\": \"7:30-14:0\", \"Wednesday\": \"7:30-14:0\"}', Decimal('5193')),\n",
+              " (\"Surrey's Café & Juice Bar\", '{\"Friday\": \"8:0-15:0\", \"Monday\": \"8:0-15:0\", \"Sunday\": \"8:0-15:0\", \"Saturday\": \"8:0-15:0\", \"Thursday\": \"8:0-15:0\"}', Decimal('2084')),\n",
+              " (\"Lilly's Cafe\", '{\"Friday\": \"11:0-21:0\", \"Monday\": \"0:0-0:0\", \"Tuesday\": \"11:0-21:0\", \"Saturday\": \"11:0-21:0\", \"Thursday\": \"11:0-21:0\", \"Wednesday\": \"11:0-21:0\"}', Decimal('777')),\n",
+              " ('Fat Boy Pantry', '{\"Friday\": \"12:0-0:0\", \"Monday\": \"0:0-0:0\", \"Sunday\": \"12:0-0:0\", \"Tuesday\": \"12:0-0:0\", \"Saturday\": \"12:0-0:0\", \"Thursday\": \"12:0-0:0\", \"Wednesday\": \"12:0-0:0\"}', Decimal('237')),\n",
+              " ('Breads on Oak Cafe & Bakery', '{\"Friday\": \"8:30-14:0\", \"Monday\": \"0:0-0:0\", \"Sunday\": \"8:30-14:0\", \"Saturday\": \"8:30-14:0\", \"Thursday\": \"8:30-14:0\", \"Wednesday\": \"8:30-14:0\"}', Decimal('61')),\n",
+              " ('French Truck Coffee', '{\"Friday\": \"7:0-14:0\", \"Monday\": \"0:0-0:0\", \"Sunday\": \"8:0-16:0\", \"Tuesday\": \"7:0-18:0\", \"Saturday\": \"8:0-16:0\", \"Thursday\": \"7:0-18:0\", \"Wednesday\": \"7:0-18:0\"}', Decimal('46')),\n",
+              " ('Café Cour', '{\"Friday\": \"9:30-16:30\", \"Sunday\": \"10:30-16:30\", \"Tuesday\": \"9:30-16:30\", \"Saturday\": \"9:30-16:30\", \"Thursday\": \"9:30-16:30\", \"Wednesday\": \"9:30-16:30\"}', Decimal('10')),\n",
+              " ('Cafe Beignet on Royal Street', '{\"Friday\": \"7:0-17:0\", \"Monday\": \"0:0-0:0\", \"Sunday\": \"7:0-15:0\", \"Tuesday\": \"7:0-15:0\", \"Saturday\": \"7:0-17:0\", \"Thursday\": \"7:0-15:0\", \"Wednesday\": \"7:0-15:0\"}', Decimal('2688')),\n",
+              " (\"Jimmy J's Cafe\", '{\"Friday\": \"7:0-14:0\", \"Monday\": \"7:0-14:0\", \"Sunday\": \"7:0-14:0\", \"Tuesday\": \"7:0-14:0\", \"Saturday\": \"7:0-14:0\", \"Thursday\": \"7:0-14:0\"}', Decimal('2137')),\n",
+              " (\"Mr. B's Bistro\", '{\"Friday\": \"11:30-20:0\", \"Sunday\": \"11:30-20:0\", \"Saturday\": \"11:30-20:0\", \"Thursday\": \"11:30-20:0\", \"Wednesday\": \"11:30-20:0\"}', Decimal('2064'))]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>Operating Hours</th>\n",
+              "            <th>Review Count</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;7:30-14:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Sunday&quot;: &quot;7:30-15:0&quot;, &quot;Tuesday&quot;: &quot;7:30-14:0&quot;, &quot;Saturday&quot;: &quot;7:30-15:0&quot;, &quot;Thursday&quot;: &quot;7:30-14:0&quot;, &quot;Wednesday&quot;: &quot;7:30-14:0&quot;}</td>\n",
+              "            <td>5193</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;8:0-15:0&quot;, &quot;Monday&quot;: &quot;8:0-15:0&quot;, &quot;Sunday&quot;: &quot;8:0-15:0&quot;, &quot;Saturday&quot;: &quot;8:0-15:0&quot;, &quot;Thursday&quot;: &quot;8:0-15:0&quot;}</td>\n",
+              "            <td>2084</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;11:0-21:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Tuesday&quot;: &quot;11:0-21:0&quot;, &quot;Saturday&quot;: &quot;11:0-21:0&quot;, &quot;Thursday&quot;: &quot;11:0-21:0&quot;, &quot;Wednesday&quot;: &quot;11:0-21:0&quot;}</td>\n",
+              "            <td>777</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;12:0-0:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Sunday&quot;: &quot;12:0-0:0&quot;, &quot;Tuesday&quot;: &quot;12:0-0:0&quot;, &quot;Saturday&quot;: &quot;12:0-0:0&quot;, &quot;Thursday&quot;: &quot;12:0-0:0&quot;, &quot;Wednesday&quot;: &quot;12:0-0:0&quot;}</td>\n",
+              "            <td>237</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Breads on Oak Cafe &amp; Bakery</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;8:30-14:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Sunday&quot;: &quot;8:30-14:0&quot;, &quot;Saturday&quot;: &quot;8:30-14:0&quot;, &quot;Thursday&quot;: &quot;8:30-14:0&quot;, &quot;Wednesday&quot;: &quot;8:30-14:0&quot;}</td>\n",
+              "            <td>61</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>French Truck Coffee</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;7:0-14:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Sunday&quot;: &quot;8:0-16:0&quot;, &quot;Tuesday&quot;: &quot;7:0-18:0&quot;, &quot;Saturday&quot;: &quot;8:0-16:0&quot;, &quot;Thursday&quot;: &quot;7:0-18:0&quot;, &quot;Wednesday&quot;: &quot;7:0-18:0&quot;}</td>\n",
+              "            <td>46</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Café Cour</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;9:30-16:30&quot;, &quot;Sunday&quot;: &quot;10:30-16:30&quot;, &quot;Tuesday&quot;: &quot;9:30-16:30&quot;, &quot;Saturday&quot;: &quot;9:30-16:30&quot;, &quot;Thursday&quot;: &quot;9:30-16:30&quot;, &quot;Wednesday&quot;: &quot;9:30-16:30&quot;}</td>\n",
+              "            <td>10</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Cafe Beignet on Royal Street</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;7:0-17:0&quot;, &quot;Monday&quot;: &quot;0:0-0:0&quot;, &quot;Sunday&quot;: &quot;7:0-15:0&quot;, &quot;Tuesday&quot;: &quot;7:0-15:0&quot;, &quot;Saturday&quot;: &quot;7:0-17:0&quot;, &quot;Thursday&quot;: &quot;7:0-15:0&quot;, &quot;Wednesday&quot;: &quot;7:0-15:0&quot;}</td>\n",
+              "            <td>2688</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Jimmy J&#x27;s Cafe</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;7:0-14:0&quot;, &quot;Monday&quot;: &quot;7:0-14:0&quot;, &quot;Sunday&quot;: &quot;7:0-14:0&quot;, &quot;Tuesday&quot;: &quot;7:0-14:0&quot;, &quot;Saturday&quot;: &quot;7:0-14:0&quot;, &quot;Thursday&quot;: &quot;7:0-14:0&quot;}</td>\n",
+              "            <td>2137</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Mr. B&#x27;s Bistro</td>\n",
+              "            <td>{&quot;Friday&quot;: &quot;11:30-20:0&quot;, &quot;Sunday&quot;: &quot;11:30-20:0&quot;, &quot;Saturday&quot;: &quot;11:30-20:0&quot;, &quot;Thursday&quot;: &quot;11:30-20:0&quot;, &quot;Wednesday&quot;: &quot;11:30-20:0&quot;}</td>\n",
+              "            <td>2064</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 22
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **7. We want to also check the compliment count of the restaurants in the previous query and we used a join on the Business and Tip table for this**"
+      ],
+      "metadata": {
+        "id": "x-kEzq6GPO96"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql \n",
+        "SELECT b.name, SUM(t.compliment_count) AS TOT_COM\n",
+        "FROM Business as b\n",
+        "INNER JOIN Tip as t \n",
+        "ON b.business_id=t.business_id\n",
+        "WHERE b.city=\"New Orleans\" AND b.categories LIKE \"%Cafes%\" AND b.is_open = 1 AND b.postal_code = '70130'\n",
+        "GROUP BY name\n",
+        "ORDER BY stars DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "id": "e0fZLwMAu2bM",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 284
+        },
+        "outputId": "1346b3bd-b840-4493-ef9a-d3da2535e0b8"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[(\"Surrey's Café & Juice Bar\", Decimal('2')),\n",
+              " ('Ruby Slipper - New Orleans', Decimal('5')),\n",
+              " (\"Lilly's Cafe\", Decimal('1')),\n",
+              " ('Fat Boy Pantry', Decimal('1')),\n",
+              " ('French Truck Coffee', Decimal('0')),\n",
+              " ('Breads on Oak Cafe & Bakery', Decimal('0')),\n",
+              " ('Palace Café', Decimal('3')),\n",
+              " (\"Mr. B's Bistro\", Decimal('2')),\n",
+              " ('Cafe Beignet on Royal Street', Decimal('0')),\n",
+              " ('Ruby Slipper Cafe', Decimal('0'))]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>TOT_COM</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>2</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>1</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>1</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>French Truck Coffee</td>\n",
+              "            <td>0</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Breads on Oak Cafe &amp; Bakery</td>\n",
+              "            <td>0</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Palace Café</td>\n",
+              "            <td>3</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Mr. B&#x27;s Bistro</td>\n",
+              "            <td>2</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Cafe Beignet on Royal Street</td>\n",
+              "            <td>0</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper Cafe</td>\n",
+              "            <td>0</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 26
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **8. As we want to keep Sandwiches as one of prime seller in our cafe, we are trying to look at the cafes from the top 10 competitors who sell sanwiches using the FROM subqeury.**"
+      ],
+      "metadata": {
+        "id": "g4lNKlCO8spc"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT name, categories, stars, city, state\n",
+        "FROM (SELECT name, categories, stars, city, state\n",
+        "      FROM Business\n",
+        "      WHERE city = \"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1 AND postal_code= '70130'\n",
+        "      ORDER BY stars DESC\n",
+        "      LIMIT 10) AS cafeorelans\n",
+        "where categories like \"%Sandwiches%\";"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 188
+        },
+        "id": "dySMnvO7786P",
+        "outputId": "247f39b7-e44f-4305-d9b7-c9d5e4ea457a"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "3 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[(\"Surrey's Café & Juice Bar\", 'Vegetarian, Restaurants, Breakfast & Brunch, Cafes, Juice Bars & Smoothies, Sandwiches, Food', 4.5, 'New Orleans', 'LA'),\n",
+              " ('Café Cour', 'Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee & Tea, Southern', 4.5, 'New Orleans', 'LA'),\n",
+              " ('Fat Boy Pantry', 'Restaurants, Sandwiches, American (New), Breakfast & Brunch, Coffee & Tea, Food, Cafes, Ice Cream & Frozen Yogurt, Juice Bars & Smoothies, Specialty Food', 4.5, 'New Orleans', 'LA')]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>categories</th>\n",
+              "            <th>stars</th>\n",
+              "            <th>city</th>\n",
+              "            <th>state</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>Vegetarian, Restaurants, Breakfast &amp; Brunch, Cafes, Juice Bars &amp; Smoothies, Sandwiches, Food</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>New Orleans</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Café Cour</td>\n",
+              "            <td>Salad, Restaurants, Cafes, Food, Vietnamese, Sandwiches, Vegetarian, Coffee &amp; Tea, Southern</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>New Orleans</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>Restaurants, Sandwiches, American (New), Breakfast &amp; Brunch, Coffee &amp; Tea, Food, Cafes, Ice Cream &amp; Frozen Yogurt, Juice Bars &amp; Smoothies, Specialty Food</td>\n",
+              "            <td>4.5</td>\n",
+              "            <td>New Orleans</td>\n",
+              "            <td>LA</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 16
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **9. Here we wanted to looks at the number of check outs user have done in our competitors**"
+      ],
+      "metadata": {
+        "id": "kDmzeGACAnl1"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql\n",
+        "SELECT b.name, c.visit_count, b.address, b.stars\n",
+        "FROM Business as b\n",
+        "INNER JOIN Checkin2 AS c\n",
+        "ON b.business_id = c.business_id\n",
+        "WHERE city = \"New Orleans\" AND categories LIKE \"%Cafes%\" AND is_open = 1 AND postal_code= '70130'\n",
+        "ORDER BY stars DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 284
+        },
+        "id": "pdv__Bvt8vrU",
+        "outputId": "aac480b2-5e96-4ed1-d5be-9ed50b56998b"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[('Ruby Slipper Cafe', 857, '204 Decatur St', 4.5),\n",
+              " (\"Lilly's Cafe\", 1863, '1813 Magazine St', 4.5),\n",
+              " ('Breads on Oak Cafe & Bakery', 39, '222 Carondelet St', 4.5),\n",
+              " ('Fat Boy Pantry', 199, '1302 Magazine St', 4.5),\n",
+              " ('Café Cour', 10, '520 Royal St', 4.5),\n",
+              " ('Ruby Slipper - New Orleans', 10209, '200 Magazine St', 4.5),\n",
+              " (\"Surrey's Café & Juice Bar\", 4185, '1418 Magazine St', 4.5),\n",
+              " ('French Truck Coffee', 112, '650 Poydras St', 4.5),\n",
+              " ('Palace Café', 3054, '605 Canal St', 4.0),\n",
+              " ('Avenue Cafe', 493, '1907 Saint Charles Ave', 4.0)]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>visit_count</th>\n",
+              "            <th>address</th>\n",
+              "            <th>stars</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper Cafe</td>\n",
+              "            <td>857</td>\n",
+              "            <td>204 Decatur St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>1863</td>\n",
+              "            <td>1813 Magazine St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Breads on Oak Cafe &amp; Bakery</td>\n",
+              "            <td>39</td>\n",
+              "            <td>222 Carondelet St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>199</td>\n",
+              "            <td>1302 Magazine St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Café Cour</td>\n",
+              "            <td>10</td>\n",
+              "            <td>520 Royal St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>10209</td>\n",
+              "            <td>200 Magazine St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>4185</td>\n",
+              "            <td>1418 Magazine St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>French Truck Coffee</td>\n",
+              "            <td>112</td>\n",
+              "            <td>650 Poydras St</td>\n",
+              "            <td>4.5</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Palace Café</td>\n",
+              "            <td>3054</td>\n",
+              "            <td>605 Canal St</td>\n",
+              "            <td>4.0</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Avenue Cafe</td>\n",
+              "            <td>493</td>\n",
+              "            <td>1907 Saint Charles Ave</td>\n",
+              "            <td>4.0</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 18
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "## **10.We Wanted to set our cafe theme \"LOVE\" and wanted to see how many people have left out text as \"LOVE\" when they have left out compliment. We obtained this by using the join on the tip table**"
+      ],
+      "metadata": {
+        "id": "4meUlh14BMpu"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "%%sql \n",
+        "SELECT b.name, COUNT(t.text)\n",
+        "FROM Business as b\n",
+        "INNER JOIN Tip as t \n",
+        "ON b.business_id=t.business_id\n",
+        "WHERE b.city=\"New Orleans\" AND b.categories LIKE \"%Cafes%\" AND b.is_open = 1 AND b.postal_code = '70130' AND text LIKE \"%love%\"\n",
+        "GROUP BY name\n",
+        "ORDER BY stars DESC\n",
+        "LIMIT 10;"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 284
+        },
+        "id": "bKJvZMymHe-e",
+        "outputId": "2ebda88a-468a-4e82-ba9d-89534570e08c"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            " * mysql://team18:***@badm-database.cte4bvaqxbgn.us-east-2.rds.amazonaws.com:3306\n",
+            "10 rows affected.\n"
+          ]
+        },
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "[(\"Surrey's Café & Juice Bar\", 18),\n",
+              " ('Ruby Slipper - New Orleans', 28),\n",
+              " (\"Lilly's Cafe\", 13),\n",
+              " ('Fat Boy Pantry', 1),\n",
+              " ('Ruby Slipper Cafe', 10),\n",
+              " (\"Mr. B's Bistro\", 8),\n",
+              " ('Napoleon House', 7),\n",
+              " (\"Jimmy J's Cafe\", 18),\n",
+              " ('Avenue Cafe', 2),\n",
+              " ('Palace Café', 14)]"
+            ],
+            "text/html": [
+              "<table>\n",
+              "    <thead>\n",
+              "        <tr>\n",
+              "            <th>name</th>\n",
+              "            <th>COUNT(t.text)</th>\n",
+              "        </tr>\n",
+              "    </thead>\n",
+              "    <tbody>\n",
+              "        <tr>\n",
+              "            <td>Surrey&#x27;s Café &amp; Juice Bar</td>\n",
+              "            <td>18</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper - New Orleans</td>\n",
+              "            <td>28</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Lilly&#x27;s Cafe</td>\n",
+              "            <td>13</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Fat Boy Pantry</td>\n",
+              "            <td>1</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Ruby Slipper Cafe</td>\n",
+              "            <td>10</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Mr. B&#x27;s Bistro</td>\n",
+              "            <td>8</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Napoleon House</td>\n",
+              "            <td>7</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Jimmy J&#x27;s Cafe</td>\n",
+              "            <td>18</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Avenue Cafe</td>\n",
+              "            <td>2</td>\n",
+              "        </tr>\n",
+              "        <tr>\n",
+              "            <td>Palace Café</td>\n",
+              "            <td>14</td>\n",
+              "        </tr>\n",
+              "    </tbody>\n",
+              "</table>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 54
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "colab": {
+      "collapsed_sections": [],
+      "name": "Team 18-Mini Project 1.ipynb",
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
